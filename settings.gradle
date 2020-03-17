@@ -1,0 +1,2 @@
+rootProject.name='Backendless2020'
+include ':app'
