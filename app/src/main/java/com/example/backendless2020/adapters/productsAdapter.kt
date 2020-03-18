@@ -16,9 +16,10 @@ class productsAdapter(private val context: Context,private val productsList: Lis
     // Amount array to hold proudct order amount
     var amountsArray = IntArray(productsList.size)
 
-    // Array to hold order details
 
-    var orderDetails = ArrayList<OrderDetails>()
+
+
+
 
 
 
@@ -96,16 +97,28 @@ class productsAdapter(private val context: Context,private val productsList: Lis
 
             Toast.makeText(context,"btn plus clicked",Toast.LENGTH_SHORT).show()
 
-
             amountsArray[position]++
-
             amountET.setText(amountsArray[position].toString(), TextView.BufferType.EDITABLE)
+
+
+            //test creating order details
+
+            var orderDetails = OrderDetails()
+            orderDetails.amount = amountsArray[position]
+            orderDetails.price = productsList[position].price
+            orderDetails.product = productsList[position].product
+
+
+
+
 
 
 
         }
 
         btnMinus.setOnClickListener {
+
+
 
             if (amountsArray[position] > 0 ) {
 
@@ -126,8 +139,6 @@ class productsAdapter(private val context: Context,private val productsList: Lis
     }
 
     companion object testComp {
-
-        var orderDetails = ArrayList<OrderDetails>()
 
 
 

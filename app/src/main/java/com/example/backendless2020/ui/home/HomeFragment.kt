@@ -20,6 +20,7 @@ import com.backendless.servercode.annotation.Async
 import com.example.backendless2020.R
 import com.example.backendless2020.adapters.productsAdapter
 import com.example.backendless2020.models.DemoTable
+import com.example.backendless2020.models.OrderDetails
 import com.example.backendless2020.models.Orders
 import com.example.backendless2020.models.Products
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -29,66 +30,102 @@ class HomeFragment : Fragment() {
     private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+        //Inflating
+
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         val textView: TextView = root.findViewById(R.id.text_home)
-
+        // Fragment text
         homeViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = "Products" })
 
+        //Order Button
+
         root.findViewById<Button>(R.id.btnOrder)?.setOnClickListener {
 
+            // CURRENT USER
 
-            // saving order (sending)
+            val user = Backendless.UserService.CurrentUser()
+
 
             var testOrder = Orders()
-             val orderCollection = mutableListOf<Orders>()
+            var testOrdersList = mutableListOf<Orders>()
+
+            var orderDetails = OrderDetails()
+            var orderDetailsList = mutableListOf<OrderDetails>()
 
 
 
+            // Order Client name
 
-            testOrder.clientName =  Backendless.UserService.CurrentUser().getProperty("name").toString()
-            orderCollection.add(testOrder)
+            testOrder.clientName = user.getProperty("name").toString()
 
+            // Order Detail
 
+            orderDetails.amount = 80
+            orderDetails.price = 80.0
+            orderDetails.product = "Cola"
 
-            testOrder.saveAsync(object: AsyncCallback<Orders>{
+            //saving order
+
+            testOrder.saveAsync(object : AsyncCallback<Orders?>{
 
                 override fun handleFault(fault: BackendlessFault?) {
-                    Toast.makeText(context,"error:${fault?.message}",Toast.LENGTH_LONG).show()
+                    //ERROR
+                    Toast.makeText(context,"NYKAT",Toast.LENGTH_LONG).show()
+
                 }
 
                 override fun handleResponse(response: Orders?) {
 
-                    Toast.makeText(context,"saved",Toast.LENGTH_SHORT).show()
+                    testOrder = response!!
 
-                    Backendless.Data.of(BackendlessUser::class.java).setRelation(
-                        Backendless.UserService.CurrentUser(),
-                        "Orders",
-                        orderCollection,object : AsyncCallback<Int>{
-                            override fun handleFault(fault: BackendlessFault?) {
+                    testOrdersList.add(response)
 
-                                Toast.makeText(context,"nykat : ${fault?.message}",Toast.LENGTH_LONG).show()
+                    //ADDING RELATION : ORDER TO USER (1:N)
 
+                    Backendless.Persistence.of(BackendlessUser::class.java).addRelation(user,"orders",testOrdersList,object : AsyncCallback<Int>{
 
-                            }
+                        override fun handleFault(fault: BackendlessFault?) {Toast.makeText(context,"NYKAT",Toast.LENGTH_LONG).show() }
 
-                            override fun handleResponse(response: Int?) {
-                              Toast.makeText(context,"relation set",Toast.LENGTH_SHORT).show()
-                            }
+                        override fun handleResponse(response: Int?) {Toast.makeText(context,"RELATION ORDER TO USER ADDED",Toast.LENGTH_LONG).show()}
 
 
-                        })
+                    })
 
+                    // SAVING ORDER DETAILS
+                    orderDetails.saveAsync(object : AsyncCallback<OrderDetails>{
+
+                        override fun handleFault(fault: BackendlessFault?) {
+                            Toast.makeText(context,"NYKAT",Toast.LENGTH_LONG).show()
+
+                        }
+
+                        override fun handleResponse(response: OrderDetails?) {
+
+                            //SAVE COMPLETED ^
+
+
+                            orderDetailsList.add(response!!)
+
+                            // ADDING RELATION : ORDER DETAILS TO ORDER (1:N)
+                            Backendless.Persistence.of(Orders::class.java).addRelation(testOrder,"orderDetails",orderDetailsList,object : AsyncCallback<Int>{
+                                override fun handleFault(fault: BackendlessFault?) {
+                                    Toast.makeText(context,"NYKAT",Toast.LENGTH_LONG).show()
+                                }
+
+                                override fun handleResponse(response: Int?) {
+                                    Toast.makeText(context,"ALL DONE ?",Toast.LENGTH_LONG).show()
+                                }
+
+
+                            })
+                        }
+
+                    })
                 }
-
-
             })
-
-
-
-
-
         }
 
 
@@ -136,12 +173,14 @@ class HomeFragment : Fragment() {
 
 
         })
-
-
-
-
-
-
-
     }
 }
+
+
+
+
+
+
+
+
+
