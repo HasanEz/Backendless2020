@@ -9,25 +9,13 @@ import android.widget.*
 import com.example.backendless2020.R
 import com.example.backendless2020.models.OrderDetails
 import com.example.backendless2020.models.Products
+import com.example.backendless2020.ui.home.HomeFragment
 
 class productsAdapter(private val context: Context,private val productsList: List<Products>): BaseAdapter (){
 
 
     // Amount array to hold proudct order amount
     var amountsArray = IntArray(productsList.size)
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     override fun getItem(position: Int): Any {
@@ -109,6 +97,11 @@ class productsAdapter(private val context: Context,private val productsList: Lis
             orderDetails.product = productsList[position].product
 
 
+            orderDetailsList.set(position,orderDetails)
+
+
+
+
 
 
 
@@ -140,9 +133,14 @@ class productsAdapter(private val context: Context,private val productsList: Lis
 
     companion object testComp {
 
+        val orderDetailsList = arrayOfNulls<OrderDetails>(HomeFragment.productsListSize)
+
+        }
+
+
+
 
 
     }
 
 
-}

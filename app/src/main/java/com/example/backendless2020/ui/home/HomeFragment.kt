@@ -52,8 +52,6 @@ class HomeFragment : Fragment() {
             var testOrder = Orders()
             var testOrdersList = mutableListOf<Orders>()
 
-            var orderDetails = OrderDetails()
-            var orderDetailsList = mutableListOf<OrderDetails>()
 
 
 
@@ -63,9 +61,7 @@ class HomeFragment : Fragment() {
 
             // Order Detail
 
-            orderDetails.amount = 80
-            orderDetails.price = 80.0
-            orderDetails.product = "Cola"
+
 
             //saving order
 
@@ -95,6 +91,10 @@ class HomeFragment : Fragment() {
                     })
 
                     // SAVING ORDER DETAILS
+
+                    Backendless.Data
+
+
                     orderDetails.saveAsync(object : AsyncCallback<OrderDetails>{
 
                         override fun handleFault(fault: BackendlessFault?) {
@@ -168,11 +168,19 @@ class HomeFragment : Fragment() {
 
                 //setting adapter
 
+                productsListSize = response!!.size
+
                 producstList.adapter = productsAdapter(context,response!!)
             }
 
 
         })
+    }
+
+    companion object HomeFragCompanion {
+
+        var productsListSize = 0
+
     }
 }
 
