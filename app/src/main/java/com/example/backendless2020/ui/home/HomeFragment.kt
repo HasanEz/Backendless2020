@@ -65,7 +65,7 @@ class HomeFragment : Fragment() {
                     //START SAVING >>>>>>>>
 
                     testOrder.orderNumber = response!! + 1
-                    //saving order
+                    //Saving Order >>
                     testOrder.saveAsync(object : AsyncCallback<Orders?>{
 
                         //ERROR
@@ -86,45 +86,39 @@ class HomeFragment : Fragment() {
                                     Toast.makeText(context,"NYKAT",Toast.LENGTH_LONG).show()
                                 }
 
-                                override fun handleResponse(response: Int?) {Toast.makeText(context,"RELATION ORDER TO USER ADDED",Toast.LENGTH_LONG).show()}
+                                override fun handleResponse(response: Int?) {
 
-
+                                    Toast.makeText(context,"RELATION ORDER TO USER ADDED",Toast.LENGTH_LONG).show()}
                             })
 
-                            // SAVING ORDER DETAILS
+                            // SAVING ORDER DETAILS LIST
 
                             var orderDetailsList = ProductsAdapter.orderDetailsList
 
 
-                            //SORTING LIST >>>> DID NOT FINISH
+                            //SORTING LIST >>>>
+                            var iterator = orderDetailsList.iterator()
 
+                            iterator.forEach {
 
-
-                            for(i in 0 until orderDetailsList.size){
-
-                                orderDetailsList[i].orderNumber = testOrder.orderNumber
-
+                                it.orderNumber = testOrder.orderNumber
+                                if(it.amount == 0 || it.amount == null){iterator.remove()}
                             }
-
-
-
-
-
 
 
                             Backendless.Data.of(OrderDetails::class.java).create( orderDetailsList,object : AsyncCallback<List<String>>{
 
-
-
-
                                 override fun handleFault(fault: BackendlessFault?) {
-                                    Log.d("Backenless error",fault?.message)
 
+                                    Log.d("Backenless error",fault?.message)
                                     Toast.makeText(context,"Error saving order details list ${fault?.message}",Toast.LENGTH_LONG).show()
                                 }
 
                                 override fun handleResponse(response: List<String>?) {
                                     Toast.makeText(context,"order details list saved",Toast.LENGTH_LONG).show()
+
+                                    // NEED TO ADD RELATION TO ORDER
+
 
                                 }
                             })
@@ -155,13 +149,15 @@ class HomeFragment : Fragment() {
             override fun handleResponse(response: List<Products>?) {
 
 
-                //setting adapter
+                //setting adapter + passing list size to companion object
 
                 productsListSize = response!!.size
 
                 producstList.adapter = ProductsAdapter(context,response!!)
 
                 for(i in 0 until response.size){
+                    var orderDetail = OrderDetails()
+                    orderDetail.amount = 0
 
                     ProductsAdapter.orderDetailsList.add(i, OrderDetails())
                 }

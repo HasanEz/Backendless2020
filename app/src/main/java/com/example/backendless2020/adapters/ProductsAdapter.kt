@@ -72,6 +72,14 @@ class ProductsAdapter(private val context: Context, private val productsList: Li
                 if (!hasFocus){
 
                     amountsArray[position] = amountET.text.toString().toInt()
+                    
+                    orderDetails.amount = amountsArray[position]
+                    orderDetails.price = productsList[position].price
+                    orderDetails.product = productsList[position].product
+                    orderDetailsList[position] = orderDetails
+
+
+
                 }
             } catch (e: Exception) {
             }
@@ -80,7 +88,7 @@ class ProductsAdapter(private val context: Context, private val productsList: Li
 
 
         amountET.setText(amountsArray[position].toString(), TextView.BufferType.EDITABLE)
-
+//
 
         //BUTTONS LOGIC
 
@@ -112,6 +120,11 @@ class ProductsAdapter(private val context: Context, private val productsList: Li
                 amountsArray[position]--
                 amountET.setText(amountsArray[position].toString(), TextView.BufferType.EDITABLE)
 
+                orderDetails.amount = amountsArray[position]
+                orderDetails.price = productsList[position].price
+                orderDetails.product = productsList[position].product
+                orderDetailsList[position] = orderDetails
+
             }
 
             Toast.makeText(context,"btn plus clicked",Toast.LENGTH_SHORT).show()
@@ -131,15 +144,7 @@ class ProductsAdapter(private val context: Context, private val productsList: Li
         var orderDetailsList = mutableListOf<OrderDetails>()
 
 
-
-
-
-
         }
-
-
-
-
 
     }
 
