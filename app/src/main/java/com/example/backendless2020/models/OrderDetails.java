@@ -1,6 +1,7 @@
 package com.example.backendless2020.models;
 
 
+
 import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
 import com.backendless.async.callback.AsyncCallback;
@@ -19,6 +20,7 @@ public class OrderDetails
     private String ownerId;
     private Double price;
     private Date created;
+    private Integer orderNumber;
     public Date getUpdated()
     {
         return updated;
@@ -67,6 +69,16 @@ public class OrderDetails
     public Date getCreated()
     {
         return created;
+    }
+
+    public Integer getOrderNumber()
+    {
+        return orderNumber;
+    }
+
+    public void setOrderNumber( Integer orderNumber )
+    {
+        this.orderNumber = orderNumber;
     }
 
 

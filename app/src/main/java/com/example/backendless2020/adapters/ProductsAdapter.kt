@@ -11,7 +11,7 @@ import com.example.backendless2020.models.OrderDetails
 import com.example.backendless2020.models.Products
 import com.example.backendless2020.ui.home.HomeFragment
 
-class productsAdapter(private val context: Context,private val productsList: List<Products>): BaseAdapter (){
+class ProductsAdapter(private val context: Context, private val productsList: List<Products>): BaseAdapter (){
 
 
     // Amount array to hold proudct order amount
@@ -45,6 +45,10 @@ class productsAdapter(private val context: Context,private val productsList: Lis
 
         val price = productsList[position].price
         val product = productsList[position].product
+
+        //order detail instance
+        var orderDetails = OrderDetails()
+
 
         //Pointers to product list item
 
@@ -91,21 +95,10 @@ class productsAdapter(private val context: Context,private val productsList: Lis
 
             //test creating order details
 
-            var orderDetails = OrderDetails()
             orderDetails.amount = amountsArray[position]
             orderDetails.price = productsList[position].price
             orderDetails.product = productsList[position].product
-
-
-            orderDetailsList.set(position,orderDetails)
-
-
-
-
-
-
-
-
+            orderDetailsList[position] = orderDetails
 
         }
 
@@ -133,7 +126,14 @@ class productsAdapter(private val context: Context,private val productsList: Lis
 
     companion object testComp {
 
-        val orderDetailsList = arrayOfNulls<OrderDetails>(HomeFragment.productsListSize)
+        // Initialized from home fragment with products list size
+
+        var orderDetailsList = mutableListOf<OrderDetails>()
+
+
+
+
+
 
         }
 

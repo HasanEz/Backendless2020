@@ -16,6 +16,9 @@ public class Main2Activity extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
 
 
+
+
+
         Backendless.Data.of("DemoTable").getObjectCount(new AsyncCallback<Integer>() {
             @Override
             public void handleResponse(Integer response) {
