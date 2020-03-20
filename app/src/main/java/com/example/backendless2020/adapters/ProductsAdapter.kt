@@ -72,7 +72,7 @@ class ProductsAdapter(private val context: Context, private val productsList: Li
                 if (!hasFocus){
 
                     amountsArray[position] = amountET.text.toString().toInt()
-                    
+
                     orderDetails.amount = amountsArray[position]
                     orderDetails.price = productsList[position].price
                     orderDetails.product = productsList[position].product

@@ -1,6 +1,7 @@
 package com.example.backendless2020.ui.home
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -22,6 +24,7 @@ import com.example.backendless2020.adapters.test
 import com.example.backendless2020.models.OrderDetails
 import com.example.backendless2020.models.Orders
 import com.example.backendless2020.models.Products
+import com.example.backendless2020.ui.orders.OrdersFragment
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment() {
@@ -118,6 +121,25 @@ class HomeFragment : Fragment() {
                                     Toast.makeText(context,"order details list saved",Toast.LENGTH_LONG).show()
 
                                     // NEED TO ADD RELATION TO ORDER
+                                    //ORDER FINISHED MOVE TO ORDERS ACTIVITY/FRAG
+
+//                                    activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragHome,OrdersFragment())?.addToBackStack(null)?.commit()
+
+                                    val fragment = OrdersFragment()
+                                    val fragmentManager = activity!!.supportFragmentManager
+                                    val fragmentTransaction = fragmentManager.beginTransaction()
+                                    fragmentTransaction.replace(R.id.nav_host_fragment, fragment)
+                                    fragmentTransaction.addToBackStack(null)
+                                    fragmentTransaction.commit()
+
+
+                                    root.findViewById<ConstraintLayout>(R.id.fragHome).visibility = View.INVISIBLE
+//
+
+
+
+
+
 
 
                                 }
