@@ -8,22 +8,32 @@ object test {
 
 
 
-        val user = "mostafa abo zbr"
-        user.toCharArray()
+//        val user = "mostafa abo zbr"
+//        user.toCharArray()
+//
+//        var userIntCode = ""
+//
+//
+//        for (i in user.toCharArray().indices){
+//
+//        println(user.toCharArray().get(i).toInt())
+//
+//            userIntCode += "${user.toCharArray()[i].toInt()}"
+//
+//        }
+//
+//
+//        print(userIntCode.toLong() + 1)
 
-        var userIntCode = ""
-
-
-        for (i in user.toCharArray().indices){
-
-        println(user.toCharArray().get(i).toInt())
-
-            userIntCode += "${user.toCharArray()[i].toInt()}"
-
-        }
-
-
-        print(userIntCode.toLong() + 1)
+//
+//        val user = "hasan"
+//
+//
+//        user.trim { "ha" }
+//
+//        user.tr
+//
+//        print(user)
 
 
 

@@ -19,6 +19,7 @@ import com.backendless.Backendless
 import com.backendless.BackendlessUser
 import com.backendless.async.callback.AsyncCallback
 import com.backendless.exceptions.BackendlessFault
+import com.backendless.persistence.DataQueryBuilder
 import com.example.backendless2020.R
 import com.example.backendless2020.adapters.ProductsAdapter
 import com.example.backendless2020.adapters.test
@@ -59,8 +60,11 @@ class HomeFragment : Fragment() {
             testOrder.clientName = user.getProperty("name").toString()
 
             //getting orders object count (to id for order) <- MUST REPAIR
+            val dataQueryBuilder = DataQueryBuilder.create()
+            var whereClause = "clientName = '${user.getProperty("name")}'"
+            dataQueryBuilder.whereClause = whereClause
 
-            Backendless.Data.of("Orders").getObjectCount(object : AsyncCallback<Int>{
+            Backendless.Data.of("Orders").getObjectCount(dataQueryBuilder,object : AsyncCallback<Int>{
 
                 override fun handleFault(fault: BackendlessFault?) {}
 
@@ -68,7 +72,7 @@ class HomeFragment : Fragment() {
 
                     //START SAVING >>>>>>>>
 
-                    testOrder.orderNumber = response!! + 1
+                    testOrder.orderNumber = user.userId +"${response!! +1}"
                     //Saving Order >>
                     testOrder.saveAsync(object : AsyncCallback<Orders?>{
 

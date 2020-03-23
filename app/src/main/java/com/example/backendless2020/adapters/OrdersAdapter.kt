@@ -25,8 +25,10 @@ class OrdersAdapter(private val context: Context, private val ordersList: List<O
         val orderNumberTv = view.findViewById<TextView>(R.id.orderNumTV)
         val orderDetailsBtn  = view.findViewById<TextView>(R.id.btnDetails)
 
+        val user= Backendless.UserService.CurrentUser()
+
         //setting order details and button on click
-        orderNumberTv.text = ordersList[position].orderNumber.toString()
+        orderNumberTv.text = ordersList[position].orderNumber.replace(user.userId,"")
 
         orderDetailsBtn.setOnClickListener {
 
@@ -34,7 +36,7 @@ class OrdersAdapter(private val context: Context, private val ordersList: List<O
 
 
             val dataQueryBuilder = DataQueryBuilder.create()
-            val whereClause = "orderNumber = ${ordersList[position].orderNumber}"
+            val whereClause = "orderNumber = '${ordersList[position].orderNumber}'"
 
             dataQueryBuilder.whereClause = whereClause
 
@@ -45,7 +47,7 @@ class OrdersAdapter(private val context: Context, private val ordersList: List<O
 
                 override fun handleResponse(response: List<OrderDetails>?) {
 
-                    Toast.makeText(context,"${response?.get(position)?.product}",Toast.LENGTH_LONG).show()
+                    Toast.makeText(context,"${response?.get(0)?.product}",Toast.LENGTH_LONG).show()
 
 
 
