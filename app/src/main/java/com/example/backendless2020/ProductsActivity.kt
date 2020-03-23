@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -19,7 +20,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.backendless.Backendless
 import com.backendless.BackendlessUser
+import kotlinx.android.synthetic.main.activity_products.*
 import kotlinx.android.synthetic.main.nav_header_products.*
+import org.w3c.dom.Text
 
 class ProductsActivity : AppCompatActivity() {
 
@@ -43,6 +46,10 @@ class ProductsActivity : AppCompatActivity() {
 
 
         val user = Backendless.UserService.CurrentUser()
+
+        // setting user details in nav view
+        nav_view.getHeaderView(0).findViewById<TextView>(R.id.navHeaderEmailTV).text = user.email.toString()
+        nav_view.getHeaderView(0).findViewById<TextView>(R.id.navHeaderNameTv).text = user.getProperty("name").toString()
 
     }
 

@@ -6,7 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
+import android.widget.Toast
+import com.backendless.Backendless
+import com.backendless.async.callback.AsyncCallback
+import com.backendless.exceptions.BackendlessFault
+import com.backendless.persistence.DataQueryBuilder
 import com.example.backendless2020.R
+import com.example.backendless2020.models.OrderDetails
 import com.example.backendless2020.models.Orders
 
 class OrdersAdapter(private val context: Context, private val ordersList: List<Orders>) : BaseAdapter() {
@@ -17,8 +23,41 @@ class OrdersAdapter(private val context: Context, private val ordersList: List<O
         //pointers to view components
 
         val orderNumberTv = view.findViewById<TextView>(R.id.orderNumTV)
+        val orderDetailsBtn  = view.findViewById<TextView>(R.id.btnDetails)
 
+        //setting order details and button on click
         orderNumberTv.text = ordersList[position].orderNumber.toString()
+
+        orderDetailsBtn.setOnClickListener {
+
+            // fetching order details with same number as order
+
+
+            val dataQueryBuilder = DataQueryBuilder.create()
+            val whereClause = "orderNumber = ${ordersList[position].orderNumber}"
+
+            dataQueryBuilder.whereClause = whereClause
+
+            Backendless.Data.of(OrderDetails::class.java).find(dataQueryBuilder,object: AsyncCallback<List<OrderDetails>>{
+                override fun handleFault(fault: BackendlessFault?) {
+
+                }
+
+                override fun handleResponse(response: List<OrderDetails>?) {
+
+                    Toast.makeText(context,"${response?.get(position)?.product}",Toast.LENGTH_LONG).show()
+
+
+
+
+
+                }
+
+
+            })
+        }
+
+
 
         return view
 
