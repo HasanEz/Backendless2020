@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.view.isInvisible
-import androidx.core.view.isVisible
 import com.backendless.Backendless
 import com.backendless.BackendlessUser
 import com.backendless.async.callback.AsyncCallback
@@ -48,7 +47,9 @@ class MainActivity : AppCompatActivity() {
 
                     loginPb.isInvisible
                     Toast.makeText(applicationContext,"Login OK ",Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this@MainActivity,Products::class.java))
+
+
+                    startActivity(Intent(this@MainActivity,ProductsActivity::class.java))
 
                 }
             })

@@ -1,7 +1,11 @@
 package com.example.backendless2020
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.Menu
+import android.widget.LinearLayout
+import android.widget.TextView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
@@ -13,8 +17,11 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.backendless.Backendless
+import com.backendless.BackendlessUser
+import kotlinx.android.synthetic.main.nav_header_products.*
 
-class Products : AppCompatActivity() {
+class ProductsActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
@@ -33,6 +40,10 @@ class Products : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(setOf(R.id.nav_home, R.id.nav_orders, R.id.nav_slideshow), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+
+        val user = Backendless.UserService.CurrentUser()
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -14,6 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import com.backendless.Backendless
 import com.backendless.BackendlessUser
 import com.backendless.async.callback.AsyncCallback
@@ -123,24 +124,8 @@ class HomeFragment : Fragment() {
                                     // NEED TO ADD RELATION TO ORDER
                                     //ORDER FINISHED MOVE TO ORDERS ACTIVITY/FRAG
 
-//                                    activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragHome,OrdersFragment())?.addToBackStack(null)?.commit()
-
-                                    val fragment = OrdersFragment()
-                                    val fragmentManager = activity!!.supportFragmentManager
-                                    val fragmentTransaction = fragmentManager.beginTransaction()
-                                    fragmentTransaction.replace(R.id.fragHome, fragment)
-                                    fragmentTransaction.addToBackStack(null)
-                                    fragmentTransaction.commit()
-
-
-                                    root.findViewById<ConstraintLayout>(R.id.fragHome).visibility = View.INVISIBLE
-//
-
-
-
-
-
-
+                                    val navController = root.findNavController()
+                                    navController.navigate(R.id.nav_orders)
 
                                 }
                             })

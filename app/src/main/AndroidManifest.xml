@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Main2Activity"></activity>
         <activity
-            android:name=".Products"
+            android:name=".ProductsActivity"
             android:label="@string/title_activity_products"
             android:theme="@style/AppTheme.NoActionBar"/>
 
