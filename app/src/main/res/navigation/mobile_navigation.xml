@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/nav_orders">
+    app:startDestination="@id/nav_home">
 
     <fragment
         android:id="@+id/nav_home"
@@ -22,4 +22,9 @@
         android:name="com.example.backendless2020.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/chooseProducts1"
+        android:name="com.example.backendless2020.ui.chooseProducts1.chooseProducts1"
+        android:label="fragment_choose_products1"
+        tools:layout="@layout/fragment_choose_products1" />
 </navigation>
